@@ -1,0 +1,27 @@
+package com.sample.iot
+ 
+import com.inda.iot.devices.*;
+import java.util.*;
+import java.util.logging.Logger;
+
+//import com.sample.PageData;
+ 
+rule "High Temperature"
+    when
+        t : TempSensor(temperature >26)
+    then
+        System.out.println("High Temperature = "+t.temperature+" start FAN" );
+        Fan_Relay.doRun=true;
+        
+end
+
+rule "Low Temperature"
+    when
+        t : TempSensor(temperature <=26)
+    then
+        System.out.println("Low Temperature = "+t.temperature+" stop FAN" );
+        Fan_Relay.doRun=false;
+       
+        
+end
+

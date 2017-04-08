@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- The HTML 4.01 Transitional DOCTYPE declaration-->
+<!-- above set at the top of the file will set     -->
+<!-- the browser's rendering engine into           -->
+<!-- "Quirks Mode". Replacing this declaration     -->
+<!-- with a "Standards Mode" doctype is supported, -->
+<!-- but may lead to some differences in layout.   -->
+
+<!DOCTYPE html>
+<html>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<body>
+
+<div ng-app="IOTWEB" ng-controller="iotcntrl">
+
+<button ng-click="onClick()">ON</buttonl>
+<button ng-click="offClick()">OFF</button>
+
+
+<h3 ng-bind="message"></h3>
+</div>
+
+<script>
+var app=angular.module('IOTWEB',[]);
+app.controller('iotcntrl',function($scope,$http) {
+
+console.log("iotctrl loading");
+
+$scope.message="Nothing" ;
+
+$scope.onClick=function()
+	{
+		console.log("inside onClick");
+		$scope.message="Nothing" ;
+		$http.get("http://1-dot-indaiot-1368.appspot.com/r/controldevices/START/")
+		.then(function(response)
+		{
+			console.log(response.data);
+			$scope.message=response.data.status;
+		}) ;
+	}
+	
+$scope.offClick=function()
+	{
+	console.log("inside offClick") ;	
+	$scope.message="Nothing" ;
+	$http.get("http://1-dot-indaiot-1368.appspot.com/r/controldevices/STOP/")
+		.then(function(response)
+		{
+			console.log(response.data) ;
+			$scope.message=response.data.status;
+		}) ;
+		
+	}
+});
+
+</script>
+</body>
+</html>
